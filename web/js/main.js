@@ -62,7 +62,7 @@ function callAPI(){
  if(response.status === 200){ $('#img-load').hide();
    let span = createNode('span');
    let spanHead = "<br><br><h2 class=\"found\"> Oh-oh! You've been pwned</h2>";
-   let spanBody = "<p class=\"resultDescription\"> Your IC number is in the breach, and tied to the following phone numbers:</p>"
+   let spanBody = "<p class=\"resultDescription\"> Your IC number is in the breach, and tied to the following Accounts. <br> Data is from 2014 and only the registered owner of the account is affected.<br><br></p>"
    span.innerHTML = spanHead + spanBody
    append(resultsDiv, span);
    }
@@ -79,7 +79,15 @@ function callAPI(){
  
    j.forEach(function(element) {
        let span = createNode('span');
-       span.innerHTML = "<p class=\"results\"><br>Telco: " + `${element.subName}` +"<br>Number: " + `${element.userData}` + "</p>";
+       let line2 = "<br>Data exposed: ";
+       element.dataClasses.forEach(function(dataClass){
+       line2 = line2 + dataClass + ", ";
+       
+       });
+       line2 = line2.slice(0, -2);
+       line2 += "</p>"
+       let line1 = "<p class=\"results\"><br>Telco: " + `${element.subName}` +"<br>Number: " + `${element.userData}`;
+       span.innerHTML = line1 + line2;
        append(resultsDiv, span);
  });
  }).catch(function(error) {
